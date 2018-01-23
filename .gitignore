@@ -18,6 +18,7 @@
 *.tar.gz
 *.rar
 *.un~
+*.swp
 
 # workspace's xml file
 .idea/ workspace.xml
