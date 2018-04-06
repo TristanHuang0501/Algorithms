@@ -7,6 +7,12 @@
 public class Solution{
     /**
      * 常规的需要O(n^2)的时间复杂度的O(n)的空间复杂度的动态规划思路
+     * 动态规划求解的问题有四个特点：
+     *     1. 求这个问题的最优解
+     *     2. 整体问题的最优解依赖于子问题的最优解
+     *     3. 可以把大问题分解为若干个小问题，这些小问题之间还有互相重叠的更小的子问题
+     *     4. 从上往下分析问题，从下往上求解问题：
+     *          由于子问题在分在大问题的过程中重复出现，为了避免重复求解子问题，我们可以用从下往上的顺序先计算小问题的最优解并存储下来，再以此为基础求取大问题的最优解。
      * @param length
      * @return
      */
@@ -29,15 +35,17 @@ public class Solution{
             for (int j = 1; j <= i / 2; j++) {
                 int num = f[j] * f[i - j];
                 max = max < num ? num : max;
-                f[i] = max;
             }
+            f[i] = max;
         }
         result = f[length];
         return result;
     }
 
     /** 
-     * 贪婪算法
+     * 贪婪算法: 
+     * O(1)的时间和空间复杂度
+     *
      * 按照如下的策略来剪绳子：
      *      当n>=5时，我们尽可能多地剪长度为3的绳子；
      *      当n=4时，把绳子剪成两段长度为2的绳子；
@@ -59,7 +67,7 @@ public class Solution{
         if (length % 3 == 1)
             timesOf3 -= 1;
         
-        //括号中的数字要么是4，要么是0
+        //括号中的数字要么是4，要么是0，2
         int timesOf2 = (length - timesOf3 * 3) / 2;
         
         int result = (int) (Math.pow(3, timesOf3) * Math.pow(2, timesOf2));
